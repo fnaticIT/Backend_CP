@@ -202,4 +202,23 @@ router.put("/updatePicture/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
+router.get("/getuser/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    console.log(req.params.email);
+    const user = await User.findOne({ email: email });
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/users", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 module.exports = router;

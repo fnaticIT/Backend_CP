@@ -138,10 +138,45 @@ router.get("/posts/a", async (req, res) => {
 
     var end = new Date();
     end.setHours(23, 59, 59, 999);
-    const posts = await Post.find({ createdAt: { $gte: start, $lt: end } ,createdtype:"club" });
+    const posts = await Post.find({ createdAt: { $gte: start, $lt: end }, createdtype: "club" });
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
+router.get("/posts/e", async (req, res) => {
+  try {
+    console.log("hello")
+    var start = new Date();
+    start.setHours(0, 0, 0, 0);
+
+    var end = new Date();
+    end.setHours(23, 59, 59, 999);
+    const posts = await Post.find({ createdAt: { $gte: start, $lt: end }, isEvent: true });
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/comments/:id", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    res.status(200).json(post.comments);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+router.put("/comments/:id", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    const newComment = req.body;
+    await post.updateOne({ $push: { comments: newComment } });
+    res.status(200).json(post.comments);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

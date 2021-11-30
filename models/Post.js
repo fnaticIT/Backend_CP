@@ -26,6 +26,22 @@ const PostSchema = new mongoose.Schema(
     },
     createdtype:{
       type:String,
+    },
+    isEvent:{
+      type:Boolean,
+      default:false
+    },
+    eventName:{
+      type:String,
+    },
+    eventDesc:{
+      type:String,
+    },
+    eventDate:{
+      type:String,
+    },
+    eventTime:{
+      type:String,
     }
   },
   { timestamps: true }
