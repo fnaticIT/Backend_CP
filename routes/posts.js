@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Post = require("../models/Post");
 const User = require("../models/User");
-
+const Queue = require("../models/Queue");
 //create a post
 
 router.post("/", async (req, res) => {
@@ -13,6 +13,19 @@ router.post("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
+//
+
+router.post("/queue", async (req, res) => {
+  const newPost = new Queue(req.body);
+  try {
+    const savedPost = await newPost.save();
+    res.status(200).json(savedPost);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//
 //update a post
 
 router.put("/:id", async (req, res) => {
@@ -24,6 +37,17 @@ router.put("/:id", async (req, res) => {
     } else {
       res.status(403).json("you can update only your post");
     }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.put("/queue/:id", async (req, res) => {
+  try {
+    const post = await Queue.findById(req.params.id);
+
+    await post.updateOne({ $set: req.body });
+    res.status(200).json("the post has been updated");
   } catch (err) {
     res.status(500).json(err);
   }
@@ -45,6 +69,26 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+//
+
+router.delete("/queue/:id", async (req, res) => {
+  try {
+    const post = await Queue.findById(req.params.id);
+    // console.log(post.userId);
+    //console.log(req.body.userId);
+    //if (post.userId === req.body.userId) {
+    await post.deleteOne();
+    res.status(200).json("the post has been deleted");
+    //} else {
+    // res.status(403).json("you can delete only your post");
+    //}
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//
 //like / dislike a post
 
 router.put("/:id/like", async (req, res) => {
@@ -119,6 +163,15 @@ router.get("/posts/all", async (req, res) => {
   }
 });
 
+router.get("/queue/all", async (req, res) => {
+  try {
+    const posts = await Queue.find();
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //get user's all posts
 
 router.get("/profile/:username", async (req, res) => {
@@ -147,7 +200,7 @@ router.get("/posts/a", async (req, res) => {
 
 router.get("/posts/e", async (req, res) => {
   try {
-    console.log("hello")
+    console.log("hello");
     var start = new Date();
     start.setHours(0, 0, 0, 0);
 

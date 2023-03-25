@@ -221,4 +221,22 @@ router.get("/users", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+router.put("/", async (req, res) => {
+  try {
+    const newuser = req.body;
+    console.log("yo", newuser);
+    const currUser = await User.findById(newuser.id);
+    // let x;
+    // if (currUser.waiting) {
+    //   x = false;
+    // } else {
+    //   x = true;
+    // }
+    await currUser.updateOne({ $set: { waiting: newuser.waiting } });
+    res.status(200).json(currUser);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 module.exports = router;

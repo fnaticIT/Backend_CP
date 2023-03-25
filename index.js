@@ -12,7 +12,8 @@ const expRoute = require("./routes/exp");
 const router = express.Router();
 const path = require("path");
 const cors = require("cors");
-app.use(cors());
+
+const paymentRoute = require("./routes/payment");
 dotenv.config();
 
 app.use("/images", express.static(path.join(__dirname, "public/images")));
@@ -21,7 +22,7 @@ app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
-
+app.use(cors());
 app.get("/", (req, res) => {
   res.send("Its running");
 });
@@ -47,11 +48,15 @@ app.use("/auth", authRoute);
 app.use("/users", userRoute);
 app.use("/posts", postRoute);
 app.use("/exp", expRoute);
+app.use(express.json({ extended: false }));
+app.use("/payment", paymentRoute);
+
+
 
 const PORT = process.env.PORT || 5000;
 
 mongoose
-  .connect("mongodb+srv://fnatic_06:naman666@cluster0.r6y69.mongodb.net/socialDB", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+  .connect("mongodb+srv://fnatic_06:naman666@cluster0.r6y69.mongodb.net/practiseDB", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
   .catch((error) => console.log(`${error} did not connect`));
 

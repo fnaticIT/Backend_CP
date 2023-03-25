@@ -70,7 +70,11 @@ const UserSchema = new mongoose.Schema(
     isClub: {
       type: Boolean,
       default: false,
-    }
+    },
+    waiting: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

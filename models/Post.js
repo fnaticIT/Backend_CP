@@ -21,28 +21,49 @@ const PostSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    createdby:{
-      type:String,
+    createdby: {
+      type: String,
     },
-    createdtype:{
-      type:String,
+    createdtype: {
+      type: String,
     },
-    isEvent:{
-      type:Boolean,
-      default:false
+    isEvent: {
+      type: Boolean,
+      default: false,
     },
-    eventName:{
-      type:String,
+    eventName: {
+      type: String,
     },
-    eventDesc:{
-      type:String,
+    eventDesc: {
+      type: String,
     },
-    eventDate:{
-      type:String,
+    eventDate: {
+      type: String,
     },
-    eventTime:{
-      type:String,
-    }
+    eventTime: {
+      type: String,
+    },
+    naivename: {
+      type: String,
+    },
+    expertname: {
+      type: String,
+    },
+    sender: {
+      type: String,
+    },
+    naivedisplay: {
+      type: String,
+    },
+    expertdisplay: {
+      type: String,
+    },
+    naiveid: {
+      type: String,
+    },
+    expertid: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
