@@ -56,7 +56,7 @@ app.use("/payment", paymentRoute);
 const PORT = process.env.PORT || 5000;
 
 mongoose
-  .connect("mongodb+srv://fnatic_06:naman666@cluster0.r6y69.mongodb.net/practiseDB", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+  .connect("mongodb+srv://fnatic_06:naman666@cluster0.r6y69.mongodb.net/practiseDB", { useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
   .catch((error) => console.log(`${error} did not connect`));
 
